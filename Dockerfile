@@ -83,6 +83,12 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get install -y \
   default-jre \
   default-jdk 
 
+# JAVA
+RUN echo "JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64/bin/java" >> /etc/environment
+ADD javax.activation-api-1.2.0.jar /usr/local/lib/R/site-library/mailR/java
+ADD javax.activation-1.2.0.jar /usr/local/lib/R/site-library/mailR/java
+
+
 # ODBC
 # See about installing ODBC drivers here: https://docs.microsoft.com/en-us/sql/connect/odbc/linux-mac/installing-the-microsoft-odbc-driver-for-sql-server?view=sql-server-2017
 # Note that the driver version installed needs to match the version used in the code
@@ -111,7 +117,7 @@ RUN DEBIAN_FRONTEND=noninteractive R --vanilla --quiet -e 'install.packages( c("
 RUN DEBIAN_FRONTEND=noninteractive R --vanilla --quiet -e 'install.packages( c("chron", "data.table", "rematch", "cellranger", "tidyr", "googlesheets", "hms", "readr", "selectr", "rvest", "pbkrtest"), repos="http://cran.us.r-project.org",quiet=TRUE)'
 
 # libraries Data Strategy
-RUN DEBIAN_FRONTEND=noninteractive R --vanilla --quiet -e 'install.packages( c("xlsx", "mailR", "lubridate", "odbc", "plotly", "DT", "formattable", "tinytex"), repos="http://cran.us.r-project.org",quiet=TRUE)'
+RUN DEBIAN_FRONTEND=noninteractive R --vanilla --quiet -e 'install.packages( c("RPostgres", "writexl", "xlsx", "mailR", "lubridate", "odbc", "plotly", "DT", "formattable", "tinytex"), repos="http://cran.us.r-project.org",quiet=TRUE)'
 
 # Shiny
 ADD ./conf /r-studio
