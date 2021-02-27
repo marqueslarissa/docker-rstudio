@@ -85,8 +85,7 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get install -y \
 
 # JAVA
 RUN echo "JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64/bin/java" >> /etc/environment
-ADD javax.activation-api-1.2.0.jar /usr/local/lib/R/site-library/mailR/java
-ADD javax.activation-1.2.0.jar /usr/local/lib/R/site-library/mailR/java
+
 
 
 # ODBC
@@ -224,6 +223,10 @@ RUN echo "" >> /etc/R/Rprofile.site && \
     echo "}" >> /etc/R/Rprofile.site  && \
     echo "" >> /etc/R/Rprofile.site
 	
+
+# add java activation into mailR package to send emails
+ADD javax.activation-api-1.2.0.jar /usr/local/lib/R/site-library/mailR/java
+ADD javax.activation-1.2.0.jar /usr/local/lib/R/site-library/mailR/java
 
 # add a non-root user so we can log into R studio as that user; make sure that user is in the group "users"
 RUN adduser --disabled-password --gecos "" --ingroup users guest 
